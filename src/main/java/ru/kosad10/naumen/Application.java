@@ -1,17 +1,20 @@
-package ru.kosad10;
+package ru.kosad10.naumen;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+import ru.kosad10.naumen.domain.DataSet;
+import ru.kosad10.naumen.persistance.FileDataWriter;
+import ru.kosad10.naumen.service.FullScanStationProcessor;
+import ru.kosad10.naumen.persistance.DataReader;
+import ru.kosad10.naumen.persistance.FileDataReader;
+
+public class Application {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        DataReader dataReader = new FileDataReader("input.txt");
+        DataSet dataSet = dataReader.read();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        FullScanStationProcessor processor = new FullScanStationProcessor();
+        processor.process(dataSet);
+
+        FileDataWriter fileDataWriter = new FileDataWriter("output.txt");
+        fileDataWriter.write(processor.process(dataSet));
     }
 }

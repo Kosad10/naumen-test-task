@@ -1,4 +1,4 @@
-package ru.kosad10.naumen.infrastructure;
+package ru.kosad10.naumen.persistance;
 
 import ru.kosad10.naumen.domain.Client;
 import ru.kosad10.naumen.domain.DataSet;
@@ -12,7 +12,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class FileDataReader implements DataReader {
     private String filePath;
@@ -38,7 +37,6 @@ public class FileDataReader implements DataReader {
             for (int i = 0; i < n; i++) {
                 BigDecimal[] line = parseLine(reader.readLine());
                 Client client = new Client();
-                client.setId(i+1);
                 client.setX(line[0]);
                 client.setY(line[1]);
                 dataSet.getClients().add(client);
@@ -51,7 +49,6 @@ public class FileDataReader implements DataReader {
     }
 
     private BigDecimal[] parseLine(String line) {
-
         if(line == null) {
             throw new InvalidLineFormatException(line);
         }
@@ -62,6 +59,5 @@ public class FileDataReader implements DataReader {
         BigDecimal x = new BigDecimal(parts[0]);
         BigDecimal y = new BigDecimal(parts[1]);
         return new BigDecimal[]{x, y};
-
     }
 }
