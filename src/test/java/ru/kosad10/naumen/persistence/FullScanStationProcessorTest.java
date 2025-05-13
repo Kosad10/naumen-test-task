@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 class FullScanStationProcessorTest {
 
     @Test
-    @DisplayName("Проверить соответсвие клиентов в радиусе")
+    @DisplayName("Проверить соответствие клиентов в радиусе")
     void checkClientsInRadius() {
         List<Station> stations = getStations();
 
