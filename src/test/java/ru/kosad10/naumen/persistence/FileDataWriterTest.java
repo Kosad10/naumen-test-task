@@ -1,28 +1,17 @@
 package ru.kosad10.naumen.persistence;
 
-import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.kosad10.naumen.domain.Client;
-import ru.kosad10.naumen.domain.DataSet;
 import ru.kosad10.naumen.domain.Station;
 import ru.kosad10.naumen.exception.ProcessFileException;
-import ru.kosad10.naumen.exception.ListIsEmptyException;
-import ru.kosad10.naumen.persistance.DataReader;
 import ru.kosad10.naumen.persistance.DataWriter;
-import ru.kosad10.naumen.persistance.FileDataReader;
 import ru.kosad10.naumen.persistance.FileDataWriter;
-import ru.kosad10.naumen.service.FullScanStationProcessor;
-import ru.kosad10.naumen.service.StationProcessor;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
