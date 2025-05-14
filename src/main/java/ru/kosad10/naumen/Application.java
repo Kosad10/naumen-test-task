@@ -6,6 +6,7 @@ import ru.kosad10.naumen.service.FullScanStationProcessor;
 import ru.kosad10.naumen.persistance.DataReader;
 import ru.kosad10.naumen.persistance.FileDataReader;
 
+
 public class Application {
     public static void main(String[] args) {
         DataReader dataReader = new FileDataReader("input.txt");

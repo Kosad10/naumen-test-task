@@ -1,6 +1,5 @@
 package ru.kosad10.naumen.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +7,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Набор входящих данных, содержащих
+ * квадрат радиуса обслуживания станции и список {@link Client клиентов}
+ */
 @Getter
 @Setter
 public class DataSet {

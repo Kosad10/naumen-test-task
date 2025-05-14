@@ -4,6 +4,10 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+/**
+ * Клиент, содержит значения координат x и y
+ *
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

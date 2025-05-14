@@ -1,5 +1,6 @@
 package ru.kosad10.naumen.persistance;
 
+import lombok.AllArgsConstructor;
 import ru.kosad10.naumen.domain.Client;
 import ru.kosad10.naumen.domain.DataSet;
 import ru.kosad10.naumen.exception.FileNotFoundException;
@@ -13,13 +14,28 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 
+@AllArgsConstructor
 public class FileDataReader implements DataReader {
+
     private String filePath;
 
-    public FileDataReader(String filePath) {
-        this.filePath = filePath;
-    }
-
+    /**
+     * Чтение входящего файла по пути filePath, файл должен содержать:
+     * <p>
+     * В первой строке 2 числа через пробел:
+     * <ul>
+     *  <li>количество клиентов 1 ≤ N ≤ (231-1)</li>
+     *  <li>значение параметра 0 < R ≤ (1.7*10100)</li>
+     * </ul>
+     * Начиная со второй строки следует ровно N строк, в которых
+     * написано два числа — координаты (-1.7*10100) < Xi,Yi ≤ (1.7*10100)
+     * i-го клиента. Нумерация ведется с нуля.
+     *
+     * @return {@link DataSet}, квадрат радиуса обслуживания станции и список {@link Client клиентов}
+     * @throws FileNotFoundException - при отсутствии файла по указанному filePath
+     * @throws ProcessFileException - при ошибке обработки файла
+     * @throws InvalidLineFormatException - при некорректном формате строки
+     */
     @Override
     public DataSet read() {
         File file = new File(filePath);

@@ -1,18 +1,22 @@
 package ru.kosad10.naumen.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Comparator;
-
+/**
+ * Станция, содержит номер клиента у которого выгодней всего строить станцию и
+ * количество обслуживаемых этой станцией клиентов
+ */
+@AllArgsConstructor
 @Getter
 public class Station implements Comparable<Station> {
     private Integer clientId;
     private Integer clientCount;
 
-    public Station(Integer clientId, Integer clientCount) {
-        this.clientId = clientId;
-        this.clientCount = clientCount;
-    }
+    /**
+     * Метод, который определяет форму записи данных в выходящий файл
+     * @return возвращает номер клиента и количество обслуживаемых им станций
+     */
 
     @Override
     public String toString() {
@@ -20,6 +24,13 @@ public class Station implements Comparable<Station> {
                 " " + clientCount;
     }
 
+    /**
+     * Метод, который определяет порядок сортировки:
+     * сначала сортировка по количеству станций в порядке убывания,
+     * в случае, если количество станций равное - сортировка по номеру клиента в порядке возрастания
+     * @param stationFirst объект для сравнения
+     * @return возвращает резуальтат сравнения
+     */
     @Override
     public int compareTo(Station stationFirst) {
         Integer result = Integer.compare(stationFirst.getClientCount(), this.clientCount);
