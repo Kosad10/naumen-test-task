@@ -18,10 +18,7 @@ public class FileDataWriter implements DataWriter {
     }
 
     @Override
-    public boolean write(List<Station> stations) {
-        if (stations == null) {
-            throw new ListIsEmptyException();
-        }
+    public void write(List<Station> stations) {
         File outputFile = new File(filePath);
 
         try {
@@ -34,6 +31,5 @@ public class FileDataWriter implements DataWriter {
         } catch (IOException e) {
             throw new ProcessFileException(e);
         }
-        return true;
     }
 }

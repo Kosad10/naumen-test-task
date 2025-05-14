@@ -60,7 +60,7 @@ class FileDataReaderTest {
     void shouldThrowExceptionIfDataIsNotEnough() {
         DataReader reader = new FileDataReader("test/input-data-is-not-enough.txt");
 
-        assertThrows(NumberFormatException.class, () -> reader.read());
+        assertThrows(InvalidLineFormatException.class, () -> reader.read());
     }
 
     @Test

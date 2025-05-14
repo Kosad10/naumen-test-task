@@ -20,91 +20,60 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@NoArgsConstructor
 class FileDataWriterTest {
-    private DataWriter dataWriter;
-    List<Station> stations;
-    String filePath;
-
-    @Test
-    @DisplayName("Выброси исключение если список станций пуст")
-    void shouldThrowExceptionIfStationsNotFound() {
-        DataWriter writer = new FileDataWriter("");
-        List<Station> stations = null;
-
-        assertThrows(ListIsEmptyException.class, () -> writer.write(stations));
-    }
 
     @Test
     @DisplayName("Выброси исключение если файл не записан")
     void shouldThrowExceptionIfFileIsNotWritten() {
         DataWriter writer = new FileDataWriter("");
-        List<Station> stations = getStations();
+        List<Station> stations = new ArrayList<>();
+        stations.add(new Station(0,0));
 
         assertThrows(ProcessFileException.class, () -> writer.write(stations));
     }
 
     //тест на создание файла, если он не создан
     @Test
-    @DisplayName("Создание файла для записи если он не создан")
-    void checkCreatingFileIfTheyNotExist() {
-        filePath = "test/output-integer-test.txt";
-        File file = new File(filePath);
-        stations = getStations();
+    @DisplayName("Создай файл если он отсутствует")
+    void creatFileIfTheyNotExist() {
+        File file = new File("test/output-integer-test.txt");
+        List<Station> stations = new ArrayList<>();
+        stations.add(new Station(0,9));
         if (file.exists()) {
             file.delete();
         }
-        dataWriter = new FileDataWriter(filePath);
-
         assertFalse(file.exists());
-        boolean doWriting = dataWriter.write(stations);
 
-        assertTrue(doWriting);
+       DataWriter dataWriter = new FileDataWriter("test/output-integer-test.txt");
+       dataWriter.write(stations);
+
         assertTrue(file.exists());
         assertTrue(file.length() > 0);
     }
 
 
     @Test
-    @DisplayName("Проверка записи в файл")
-    void checkWritingData() throws IOException {
-        Path file = Files.createTempFile("output-integer-test", ".txt");
-        filePath = "test/output-integer-test.txt";
-        dataWriter = new FileDataWriter(filePath);
-        List<Station> stations1 = new ArrayList<>();
+    @DisplayName("Запиши в файл не больше 10 строк")
+    void writeDataNoMoreThanTenLines() throws IOException {
+        DataWriter dataWriter = new FileDataWriter("test/output-integer-test.txt");
+        List<Station> stations = new ArrayList<>();
         for (int i = 1; i < 12; i++) {
-            stations1.add(new Station(i, i * 2));
+            stations.add(new Station(i, i * 2));
         }
 
-        dataWriter.write(stations1);
-        DataReader reader = new FileDataReader(filePath);
-        List<String> lines = Files.readAllLines(file);
+        dataWriter.write(stations);
+        List<String> lines = Files.readAllLines(Paths.get("test/output-integer-test.txt"));
 
-        assertTrue(lines.size()<10);
+        assertTrue(lines.size() == 10);
         for (int i = 0; i < lines.size(); i++) {
-            assertEquals(stations1.get(i).toString(), lines.get(i));
+            assertEquals(stations.get(i).toString(), lines.get(i));
         }
-    }
-
-    private static List<Station> getStations() {
-        Client cl1 = new Client(BigDecimal.valueOf(0), BigDecimal.valueOf(0));
-        Client cl2 = new Client(BigDecimal.valueOf(2), BigDecimal.valueOf(-2));
-        Client cl3 = new Client(BigDecimal.valueOf(5), BigDecimal.valueOf(3));
-        Client cl4 = new Client(BigDecimal.valueOf(-2), BigDecimal.valueOf(2));
-        Client cl5 = new Client(BigDecimal.valueOf(5), BigDecimal.valueOf(1));
-        List<Client> clients = new ArrayList<>(Arrays.asList(cl1, cl2, cl3, cl4, cl5));
-
-        DataSet dataSet = new DataSet();
-        dataSet.setRadiusSquared(BigDecimal.valueOf(9));
-        dataSet.setClients(clients);
-
-        StationProcessor stationProcessor = new FullScanStationProcessor();
-        return stationProcessor.process(dataSet);
     }
 }

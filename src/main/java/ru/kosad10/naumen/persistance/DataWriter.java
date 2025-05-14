@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface DataWriter {
 
-    boolean write(List<Station> stations);
+    void write(List<Station> stations);
 }
